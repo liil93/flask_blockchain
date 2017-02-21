@@ -5,7 +5,8 @@
 
 ### Prev
 - pip install virtualenv
-- activate  
+- activate
+      cd flask_blockchain
       source flask/bin/activate  
 
 ### Install dependancy
