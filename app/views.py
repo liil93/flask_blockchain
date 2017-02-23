@@ -46,3 +46,9 @@ def login():
 def signup():
     return render_template("signup.html",
                         title='Sign Up')
+
+@app.route('/logout')
+def logout():
+    # remove the username from the session if it's there
+    session.pop('email', None)
+    return redirect(url_for('index'))
