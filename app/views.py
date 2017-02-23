@@ -7,14 +7,32 @@ import json, requests
 @app.route('/')
 @app.route('/index')
 def index():
-	return render_template("search.html",
+	if 'username' in session:
+		return 'Logged in as %s' % escape(session['username'])
+	else:
+		return render_template("search.html",
                         title='Welcome')
 
 
-@app.route('/login', methods=['GET'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    error=None
+    if request.method == 'POST':
+        if request.form['email'] != app.config['EMAIL']:
+            error = 'Invalid username'
+        elif request.form['password'] != app.config['PASSWORD']:
+            error = 'Invalid password'
+        else:
+            # session['logged_in'] = True
+            # flash('You were logged in','normal')
+
+            return redirect('/main2')
+
     return render_template("login.html",
-                        title='Login')
+                        title='Sign In',
+                        error=error)
+
+
 
 @app.route('/signup', methods=['GET'])
 def signup():
