@@ -2,6 +2,39 @@ from flask import render_template, flash, redirect, request, Response
 from app import app
 import json, requests
 
+################################################################
+from flask import Flask, session, redirect, url_for, escape, request
+
+@app.route('/')
+def index():
+    if 'username' in session:
+        return 'Logged in as %s' % escape(session['username'])
+    return 'You are not logged in'
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        session['username'] = request.form['username']
+        return redirect(url_for('index'))
+    return '''
+        <form action="" method="post">
+            <p><input type=text name=username>
+            <p><input type=submit value=Login>
+        </form>
+    '''
+
+@app.route('/logout')
+def logout():
+    # remove the username from the session if it's there
+    session.pop('username', None)
+    return redirect(url_for('index'))
+
+# set the secret key.  keep this really secret:
+app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+
+
+################################################################
+
 
 
 #test
@@ -29,25 +62,25 @@ def test_post():
 	return resp
 
 #login
-@app.route('/login', methods=['POST', 'GET'])
-def login():
-	# ImmutableMultiDict([('airlock_id', ''),
-	# 					('email', '1234'),
-	# 					('authenticity_token', '#f'),
-	# 					('utf8', '✓'),
-	# 					('password', '1245'),
-	# 					('from', 'email_login')])
-	first= request.form.get("email")
-	second= request.form.get("password")
-	data = {"email": first, "password": second, "third": "login"}
-
-	data_decode = request.form
-	print(data_decode)
-
-	js = json.dumps(data)
-	resp = Response(js, status=200, mimetype='application/json')
-
-	return resp
+# @app.route('/login', methods=['POST', 'GET'])
+# def login():
+# 	# ImmutableMultiDict([('airlock_id', ''),
+# 	# 					('email', '1234'),
+# 	# 					('authenticity_token', '#f'),
+# 	# 					('utf8', '✓'),
+# 	# 					('password', '1245'),
+# 	# 					('from', 'email_login')])
+# 	first= request.form.get("email")
+# 	second= request.form.get("password")
+# 	data = {"email": first, "password": second, "third": "login"}
+#
+# 	data_decode = request.form
+# 	print(data_decode)
+#
+# 	js = json.dumps(data)
+# 	resp = Response(js, status=200, mimetype='application/json')
+#
+# 	return resp
 
 @app.route('/signup_login', methods=['POST', 'GET'])
 def signup_login():
@@ -73,10 +106,10 @@ def signup_login():
 
 
 # index view function suppressed for brevity
-@app.route('/')
-@app.route('/index')
-def index():
-	return "Hello, World!"
+# @app.route('/')
+# @app.route('/index')
+# def index():
+# 	return "Hello, World!"
 
 
 
