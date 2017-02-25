@@ -1,4 +1,5 @@
 {% block header %}
+
 <!-- navi -->
 <div class="smart-banner" aria-hidden="true">
 </div>
@@ -43,8 +44,6 @@
   </style>
   <div data-hypernova-key="signup_login_dlsheaderbundlejs">
     <div data-reactroot="" data-reactid="1" data-react-checksum="470416915">
-
-      {% if session %}
       <div class="comp pull-right show-logout" data-reactid="2">
         <a data-reactified-header-link="true" href="/logout" class="hdr-btn link-reset" data-login-modal="true" style="outline:none;" data-reactid="3"><span data-reactid="4">로그아웃</span></a>
       </div>
@@ -57,26 +56,6 @@
       <div class="comp pull-right show-logout" data-reactid="6">
         <a data-reactified-header-link="true" href="/signup" class="hdr-btn link-reset" data-signup-modal="true" style="outline:none;" data-reactid="8"><span data-reactid="8">펫 등록</span></a>
       </div>
-      
-      {% else %}
-      <div class="comp pull-right show-logout" data-reactid="2">
-        <a data-reactified-header-link="true" href="/login" class="hdr-btn link-reset" data-login-modal="true" style="outline:none;" data-reactid="3"><span data-reactid="4">로그인</span></a>
-      </div>
-
-      <div class="comp pull-right showat-logout" data-reactid="5">
-        <a data-reactified-header-link="true" href="/signup" class="hdr-btn link-reset" data-signup-modal="true" style="outline:none;" data-reactid="6"><span data-reactid="7">회원가입</span></a>
-      </div>
-
-      <div class="comp pull-right show-logout" data-reactid="1">
-        <a data-reactified-header-link="true" href="/login" class="hdr-btn link-reset" data-login-modal="true" style="outline:none;" data-reactid="1"><span data-reactid="1">도움말</span></a>
-      </div>
-      {% endif %}
-
-
-
-
-
-
       <!-- react-empty: 8 -->
     </div>
   </div>
@@ -86,7 +65,6 @@
   <script type="application/json" data-aphrodite-css="signup_login_dls/header.bundle.js">
                 <!--[]-->
             </script>
-
   <div class="comp search-bar-wrapper" role="search">
     <form action="https://naver.com" class="search-form">
       <div class="search-bar">

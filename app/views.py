@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, request, Response
 from flask import Flask, session, url_for, escape
 from app import app
 import json, requests
-
+from . import function
 # set the secret key.  keep this really secret:
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 # app.secret_key = os.urandom(24)
@@ -13,42 +13,88 @@ app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 @app.route('/index')
 def index():
 	if 'email' in session:
-		return 'Logged in as %s' % escape(session['email'])
+		return render_template("search.html",
+                        title='Welcome',
+						session='OK')
 	else:
 		return render_template("search.html",
-                        title='Welcome')
+                        title='Welcome',
+						session=None)
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-	error=None
-	if request.method == 'POST':
-		session['email'] = request.form['email']
-		return redirect('/index')
-	# if request.method == 'POST':
-	# 	if request.form['email'] != app.config['EMAIL']:
-	# 		error = 'Invalid username'
-	# 	elif request.form['password'] != app.config['PASSWORD']:
-	# 		error = 'Invalid password'
-	# 	else:
-	# 		# session['logged_in'] = True
-    #         # flash('You were logged in','normal')
-	# 		session['email'] = request.form['email']
-	# 		return redirect('/index')
+    error=None
+    if request.method == 'POST':
+        Email= request.form.get("email")
+        PW = request.form.get("password")
+        result1 = function.Check_email(Email)
+        result2 = function.Check_pw(Email, PW)
+        if result1 ==[]:
+            error = 'Invalid username'
+        elif result2 ==[]:
+            error = 'Invalid password'
+        else:
+            session['email'] = Email
+            return redirect('/')
 
-	return render_template("login.html",
-						title='Sign In',
-						error=error)
+    return render_template("login.html",
+                        title='Sign In',
+                        error=error)
 
-
-
-@app.route('/signup', methods=['GET'])
+@app.route('/signup', methods=['POST', 'GET'])
 def signup():
-    return render_template("signup.html",
-                        title='Sign Up')
+	# ImmutableMultiDict([('user[last_name]', 'yoo'),
+	# 					('user[password]', '1q2w3e4r'),
+	# 					('user[birthday_month]', '1'),
+	# 					('user[birthday_day]', '4'),
+	# 					('user[birthday_year]', '2011'),
+	# 					('utf8', '✓'),
+	# 					('from', 'email_signup'),
+	# 					('user[first_name]', 'dongwon'),
+	# 					('user[email]', 'asldkfj@nave.rcom'),
+	# 					('user_profile_info[receive_promotional_email]', '0'),
+	# 					('user_profile_info[receive_promotional_email]', '1'),
+	# 					('authenticity_token', '#j')])
 
-@app.route('/logout')
+	if request.method == 'POST':
+		Email= request.form.get("user[email]")
+		PW = request.form.get("user[password]")
+		result = function.Save_mem(Email, PW)
+		print(request.form, Email, PW, result)
+		if result == 1:
+			session['email'] = Email
+			return redirect('/')
+		else:
+			return render_template("signup.html",
+								title='SignUp',
+								error=None)
+
+	else:
+		return render_template("signup.html",
+							title='SignUp',
+							error=None)
+
+
+
+
+
+@app.route('/logout', methods=['GET', 'POST'])
 def logout():
     # remove the username from the session if it's there
     session.pop('email', None)
-    return redirect(url_for('index'))
+    return redirect('/')
+
+
+@app.route('/room', methods=['GET', 'POST'])
+def room():
+	if request.method == 'POST':
+		print(request.form)
+
+	return render_template("room.html",
+                        title='progress')
+
+@app.route('/test', methods=['GET', 'POST'])
+def test():
+    return render_template("room.html",
+                        title='progress')

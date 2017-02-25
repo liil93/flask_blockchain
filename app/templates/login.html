@@ -2,6 +2,8 @@
 
 
 {% block body %}
+{% include 'header.html' %}
+
 <main id="site-content" role="main">
     <div class="page-container-responsive page-container-auth space-top-4 space-8">
       <div class="panel signup-login-form__container" id="signup-modal-content">
@@ -96,4 +98,5 @@
         <input id="airlock_id" name="airlock_id" type="hidden" value=""/>
       </form>
   </main>
+  {% include 'footer.html' %}
   {% endblock %}
