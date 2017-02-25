@@ -15,7 +15,7 @@ def index():
 	if 'email' in session:
 		return render_template("search.html",
                         title='Welcome',
-						session='OK')
+						session=session['email'])
 	else:
 		return render_template("search.html",
                         title='Welcome',
@@ -24,23 +24,26 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    error=None
-    if request.method == 'POST':
-        Email= request.form.get("email")
-        PW = request.form.get("password")
-        result1 = function.Check_email(Email)
-        result2 = function.Check_pw(Email, PW)
-        if result1 ==[]:
-            error = 'Invalid username'
-        elif result2 ==[]:
-            error = 'Invalid password'
-        else:
-            session['email'] = Email
-            return redirect('/')
+	if 'email' in session:
+		return redirect('/')
+	else:
+	    error=None
+	    if request.method == 'POST':
+	        Email= request.form.get("email")
+	        PW = request.form.get("password")
+	        result1 = function.Check_email(Email)
+	        result2 = function.Check_pw(Email, PW)
+	        if result1 ==[]:
+	            error = 'Invalid username'
+	        elif result2 ==[]:
+	            error = 'Invalid password'
+	        else:
+	            session['email'] = Email
+	            return redirect('/')
 
-    return render_template("login.html",
-                        title='Sign In',
-                        error=error)
+	    return render_template("login.html",
+	                        title='Sign In',
+	                        error=error)
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
@@ -61,15 +64,14 @@ def signup():
 		Email= request.form.get("user[email]")
 		PW = request.form.get("user[password]")
 		result = function.Save_mem(Email, PW)
-		print(request.form, Email, PW, result)
 		if result == 1:
 			session['email'] = Email
 			return redirect('/')
 		else:
+			error = 'Email already exists.'
 			return render_template("signup.html",
 								title='SignUp',
-								error=None)
-
+								error=error)
 	else:
 		return render_template("signup.html",
 							title='SignUp',
@@ -92,9 +94,10 @@ def room():
 		print(request.form)
 
 	return render_template("room.html",
-                        title='progress')
+                        title='progress',
+						session='OK')
 
 @app.route('/test', methods=['GET', 'POST'])
 def test():
-    return render_template("room.html",
-                        title='progress')
+	print(type(escape(session['email'])), escape(session['email']), session['email'])
+	return 'test'

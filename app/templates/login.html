@@ -4,6 +4,13 @@
 {% block body %}
 {% include 'header.html' %}
 
+{% if error %}
+  <div class="alert alert-notice alert-info">
+        <i class="icon alert-icon icon-comment"></i>
+        {{ error }}
+  </div>
+{% endif %}
+
 <main id="site-content" role="main">
     <div class="page-container-responsive page-container-auth space-top-4 space-8">
       <div class="panel signup-login-form__container" id="signup-modal-content">

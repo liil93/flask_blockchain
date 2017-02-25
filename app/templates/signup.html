@@ -5,6 +5,13 @@
 
 {% include 'header.html' %}
 
+{% if error %}
+  <div class="alert alert-notice alert-info">
+        <i class="icon alert-icon icon-comment"></i>
+        {{ error }}
+  </div>
+{% endif %}
+
 <!-- signup -->
   <main id="site-content" role="main">
     <div class="page-container-responsive page-container-auth space-top-4 space-8">
@@ -17,7 +24,11 @@
             <h2><small>자, 시작해볼까요?</small></h2>
           </div>
           <!-- Hide sign in -->
+          {% if error %}
+          <div class="signup-form-fields hide" id="signup-select">
+          {% else %}
           <div class="signup-form-fields" id="signup-select">
+          {% endif %}
             <div class="social-buttons">
               <!-- <form accept-charset="UTF-8" action="https://www.airbnb.co.kr/oauth_connect?from=facebook_signup&amp;service=facebook" method="post"> -->
                 <form accept-charset="UTF-8" action="#a" method="post">
@@ -92,7 +103,11 @@
               <input name="utf8" type="hidden" value="&#x2713;"/><input name="authenticity_token" type="hidden" value="#j"/>
             </div>
             <!-- hide signup -->
+            {% if error %}
+            <div class="signup-form-fields" id="signup-email">
+            {% else %}
             <div class="signup-form-fields hide" id="signup-email">
+            {% endif %}
               <input id="from" name="from" type="hidden" value="email_signup"/>
               <div class="control-group space-1" id="inputEmail">
                 <input type="email" name="user[email]" placeholder="이메일 주소" value="" class="decorative-input inspectletIgnore">
