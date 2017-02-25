@@ -8,3 +8,24 @@ function onClicked(elem) {
   }
 
 }
+
+
+function onClicked_Plus(elem) {
+  var value = parseInt(document.getElementById('input_number_of_room').value, 10);
+  value = isNaN(value) ? 0 : value;
+  value++;
+  document.getElementById('input_number_of_room').value = value;
+  document.getElementById("span_number_of_room").innerHTML="방 " + value + '개';
+
+}
+
+function onClicked_Minus(elem) {
+  var value = parseInt(document.getElementById('input_number_of_room').value, 10);
+  value = isNaN(value) ? 0 : value;
+  if(value > 0) {
+    value--;
+    document.getElementById('input_number_of_room').value = value;
+    document.getElementById("span_number_of_room").innerHTML="방 " + value + '개';
+  }
+
+}

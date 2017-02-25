@@ -12,6 +12,9 @@ app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 @app.route('/')
 @app.route('/index')
 def index():
+
+
+
 	if 'email' in session:
 		return render_template("search.html",
                         title='Welcome',
@@ -88,16 +91,83 @@ def logout():
     return redirect('/')
 
 
-@app.route('/room', methods=['GET', 'POST'])
-def room():
+@app.route('/enrollment_home/address', methods=['GET', 'POST'])
+def enrollment_home_address():
+	# Check session
+	if not 'email' in session:
+		return redirect('/')
+
 	if request.method == 'POST':
 		print(request.form)
+		# ImmutableMultiDict([('country_code', 'US'),
+		# 					('city', '1'),
+		# 					('street', '1'),
+		# 					('zipcode', '1'),
+		# 					('apt', '1'),
+		# 					('state', '1')])
+		return redirect('/enrollment_home/room')
+
+	return render_template("address.html",
+                        title='progress',
+						session='OK')
+
+
+@app.route('/enrollment_home/room', methods=['GET', 'POST'])
+def enrollment_home_room():
+	# Check session
+	if not 'email' in session:
+		return redirect('/')
+
+
+	if request.method == 'POST':
+		print(request.form)
+		# ImmutableMultiDict([('house_type', '2'),
+		# 					('number_of_room', '1')])
+		return redirect('/enrollment_home/car_elevator')
 
 	return render_template("room.html",
                         title='progress',
 						session='OK')
 
+@app.route('/enrollment_home/car_elevator', methods=['GET', 'POST'])
+def enrollment_home_car_elevator():
+	# Check session
+	if not 'email' in session:
+		return redirect('/')
+
+
+	if request.method == 'POST':
+		print(request.form)
+		# ImmutableMultiDict([('elevatorType', 'yes'),
+		# 					('parkingType', 'no')])
+		return redirect('/enrollment_home/complete')
+
+	return render_template("car_elevator.html",
+                        title='progress',
+						session='OK')
+
+@app.route('/enrollment_home/complete', methods=['GET', 'POST'])
+def enrollment_home_complete():
+	# Check session
+	if not 'email' in session:
+		return redirect('/')
+
+
+	if request.method == 'POST':
+		print(request.form)
+		# ImmutableMultiDict([('elevatorType', 'yes'),
+		# 					('parkingType', 'no')])
+		return redirect('/')
+
+	return render_template("enrollment_home_complete.html",
+                        title='progress',
+						session='OK')
+
 @app.route('/test', methods=['GET', 'POST'])
 def test():
-	print(type(escape(session['email'])), escape(session['email']), session['email'])
-	return 'test'
+	if request.method == 'POST':
+		print(request.form)
+
+	return render_template("car_elevator.html",
+                        title='progress',
+						session='OK')

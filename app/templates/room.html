@@ -4,11 +4,34 @@
 {% block body %}
 {% include 'header.html' %}
 
+<!-- progress -->
+<div>
+	<div class="progress-bar__container">
+		<div>
+			<span>
+			<div class="progress-section progress__bar-section progress-section--first progress-section--completed" style="width: 16.666666666666668%; left: 0%; max-width: 100%;">
+			</div>
+			<div class="progress-section progress__bar-section progress-section--completed" style="width: 16.666666666666668%; left: 16.666666666666668%; max-width: 83.33333333333333%;">
+			</div>
+			<div class="progress-section progress__bar-section progress-section--completed" style="width: 16.666666666666668%; left: 33.333333333333336%; max-width: 66.66666666666666%;">
+			</div>
+			<div class="progress-section progress__bar-section progress-section--completed progress-section--last-completed" style="width: 16.666666666666668%; left: 50%; max-width: 50%;">
+			</div>
+			<div class="progress-section progress__bar-section" style="width: 16.666666666666668%; left: 66.66666666666667%; max-width: 33.33333333333333%;">
+			</div>
+			<div class="progress-section progress__bar-section" style="width: 16.666666666666668%; left: 83.33333333333334%; max-width: 16.666666666666657%;">
+			</div>
+			</span>
+		</div>
+	</div>
+</div>
+<!-- progress -->
+
 <div class="left-backdrop"></div>
 <div class="right-backdrop hide-sm bg-white right-backdrop--with-bg"></div>
 <div class="list-your-space__content">
 	<div class="centered-content clearfix">
-    <form accept-charset="UTF-8" action="http://localhost:5000/room" class="room" data-action="Room" method="post">
+    <form accept-charset="UTF-8" action="http://localhost:5000/enrollment_home/room" class="room" data-action="Room" method="post">
 		<div class="main-panel-container no-padding-h bg-white main-panel-outer-half clearfix" tabindex="-1">
 			<!-- react-empty: 97 -->
 			<div class="main-panel main-panel-padding main-panel-progress pull-right main-panel-inner-half space-sm-8">
@@ -67,19 +90,34 @@
 							</div>
 						</div>
 					</div>
-					<div class="space-top-4 space-4">
-						<div>
-							<label for="house-type" class="h4 text-gray text-normal"><span>게스트가 묵을 방 유형</span></label>
-							<div class="select select-block select-jumbo">
-								<!-- react-empty: 155 -->
-								<select id="room-type" name="room_type" class="">
-									<option value="entire_home">집 전체</option>
-									<option value="private_room">개인실</option>
-									<option value="shared_room">다인실</option>
-								</select>
-							</div>
-						</div>
-					</div>
+
+					<!-- 방 개수 -->
+					<div class="row space-4 no-margin-h">
+	            <div>
+	                <!-- react-empty: 5782 -->
+									<label for="house-type" class="h4 text-gray text-normal"><span>방은 몇 개인가요?</span></label>
+	                <div class="increment-btn no-padding">
+	                    <div class="increment-btn btn-group no-padding">
+	                        <div class="text-gray btn increment-btn__label increment-jumbo increment-btn__label--with-increment-btns" tabindex="0" role="textbox">
+	                            <div class="increment-btn__border-container-label text-truncated">
+																<span class="text-muted">
+																	<span id="span_number_of_room">방 1개</span>
+																	<input id="input_number_of_room" type="hidden" name="number_of_room" value="1">
+																</span>
+	                            </div>
+	                        </div>
+													<button onclick="onClicked_Minus(this)" type="button" class="btn btn-jumbo increment-btn__decrementer" aria-label="minus 1">
+														<div class="increment-btn__border-container-decrementer"></div>
+													</button>
+													<button onclick="onClicked_Plus(this)" type="button" class="btn btn-jumbo increment-btn__incrementer increment-btn__incrementer" aria-label="plus 1">
+													</button>
+												</div>
+	                </div>
+	            </div>
+	        </div>
+					<!-- 방 개수 -->
+
+
 				</div>
 			</div>
       <div class="main-panel__actions-wrapper">
@@ -91,7 +129,7 @@
               <div class="row no-margin-padding__sm">
                 <div class="main-panel__actions col-sm-12 no-margin-padding__sm">
                   <div>
-                    <a class="btn-progress-back link-icon va-container va-container-v pull-left text-gray link--accessibility-outline" href="#">
+                    <a class="btn-progress-back link-icon va-container va-container-v pull-left text-gray link--accessibility-outline" href="/address">
                       <span class="icon hide-sm"></span>
                       <span class="va-middle"><h5 class="text-normal"><span>뒤로</span></h5></span>
                     </a>
